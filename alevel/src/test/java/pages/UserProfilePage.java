@@ -1,15 +1,14 @@
 package pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-
-import java.util.stream.Stream;
+import org.openqa.selenium.WebElement;
+import pages.base_abstract.BasePage;
 
 public class UserProfilePage extends BasePage {
 
     @AndroidFindBy(id = "com.instagram.android:id/row_profile_header_edit_profile")
-    private AndroidElement EditProfileButton;
+    private WebElement EditProfileButton;
 
     public UserProfilePage(AndroidDriver driver){
         super(driver);
@@ -17,7 +16,7 @@ public class UserProfilePage extends BasePage {
 
     @Override
     public boolean isShown() {
-        return Stream.of(EditProfileButton).allMatch(AndroidElement::isDisplayed);
+        return EditProfileButton.isDisplayed();
 
     }
 

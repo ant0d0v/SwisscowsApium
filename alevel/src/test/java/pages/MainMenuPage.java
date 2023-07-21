@@ -1,24 +1,23 @@
 package pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-
-import java.util.stream.Stream;
+import org.openqa.selenium.WebElement;
+import pages.base_abstract.BasePage;
 
 public class MainMenuPage extends BasePage {
 
     @AndroidFindBy(accessibility = "Search and Explore")
-    private AndroidElement SearchAndExploreButton;
+    private WebElement SearchAndExploreButton;
 
     @AndroidFindBy(accessibility = "Home")
-    private AndroidElement HomeButton;
+    private WebElement HomeButton;
 
     @AndroidFindBy(accessibility = "Profile")
-    private AndroidElement ProfileButton;
+    private WebElement ProfileButton;
 
-    @AndroidFindBy(id = "com.instagram.android:id/tab_icon", accessibility = "Camera")
-    private AndroidElement CameraButton;
+    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]")
+    private WebElement image;
 
     public MainMenuPage(AndroidDriver driver){
         super(driver);
@@ -36,6 +35,6 @@ public class MainMenuPage extends BasePage {
 
     @Override
     public boolean isShown() {
-        return Stream.of(SearchAndExploreButton, HomeButton, CameraButton, ProfileButton).allMatch(AndroidElement::isDisplayed);
+        return image.isDisplayed();
     }
 }

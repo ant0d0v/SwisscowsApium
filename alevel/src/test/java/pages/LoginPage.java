@@ -1,46 +1,54 @@
 package pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-
-import java.util.stream.Stream;
+import org.openqa.selenium.WebElement;
+import pages.base_abstract.BasePage;
 
 public class LoginPage extends BasePage {
 
     private String pwd = "Westy123";
-    private String email = "justcasualuser2@gmail.com";
 
-    @AndroidFindBy(id = "com.instagram.android:id/login_username")
-    private AndroidElement emailField;
 
-    @AndroidFindBy(id = "com.instagram.android:id/password")
-    private AndroidElement pwdField;
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")
+    private WebElement emailField;
 
-    @AndroidFindBy(id = "com.instagram.android:id/button_text")
-    private AndroidElement ProceedLoginbutton;
+    @AndroidFindBy(xpath= "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")
+    private WebElement pwdField;
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Log in\"]")
+    private WebElement loginButton;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Log in\"]")
+    private WebElement ProceedLoginbutton;
 
     public LoginPage(AndroidDriver driver){
         super(driver);
     }
 
     public LoginPage setEmailField(){
-        emailField.sendKeys(email);
+        emailField.sendKeys("justcasualuser2@gmail.com");
         return this;
     }
 
     public LoginPage setPasswordField(){
-        pwdField.sendKeys(pwd);
+        pwdField.sendKeys("Westy123");
+        return this;
+    }
+    public LoginPage clickPasswordField(){
+        pwdField.click();
         return this;
     }
 
-    public MainMenuPage performLogin(){
+    public MainMenuPage loginButton(){
         ProceedLoginbutton.click();
         return new MainMenuPage(driver);
     }
-
+    public LoginPage proceedToLoginPage(){
+        loginButton.click();
+        return new LoginPage(driver);
+    }
     @Override
     public boolean isShown() {
-        return Stream.of(emailField, pwdField, ProceedLoginbutton).allMatch(AndroidElement::isDisplayed);
+        return ProceedLoginbutton.isDisplayed();
     }
 }
