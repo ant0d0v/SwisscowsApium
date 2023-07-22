@@ -2,6 +2,7 @@ package pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import pages.base_abstract.BasePage;
 
@@ -24,25 +25,27 @@ public class LoginPage extends BasePage {
     public LoginPage(AndroidDriver driver){
         super(driver);
     }
-
+    @Step
     public LoginPage setEmailField(){
         emailField.sendKeys("justcasualuser2@gmail.com");
         return this;
     }
-
+    @Step
     public LoginPage setPasswordField(){
         pwdField.sendKeys("Westy123");
         return this;
     }
+    @Step
     public LoginPage clickPasswordField(){
         pwdField.click();
         return this;
     }
-
+    @Step
     public MainMenuPage loginButton(){
         ProceedLoginbutton.click();
         return new MainMenuPage(driver);
     }
+    @Step
     public LoginPage proceedToLoginPage(){
         loginButton.click();
         return new LoginPage(driver);
