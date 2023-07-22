@@ -10,10 +10,9 @@ public class InstagramTests extends AndroidBaseTest {
 
     @Test
     public void MainScreenWithSearchTest(){
-        LoginPage loginPage = new LoginPage(getAndroidDriver());
 
-       openFirstScreen().isShown();
-       loginPage
+       openFirstScreen()
+               .waitUntilToBeVisibleLoginScreen()
                .proceedToLoginPage()
                .setEmailField()
                .clickPasswordField()

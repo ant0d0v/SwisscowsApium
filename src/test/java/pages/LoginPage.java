@@ -4,7 +4,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base_abstract.BasePage;
+
+import java.time.Duration;
 
 public class LoginPage extends BasePage {
 
@@ -50,6 +54,13 @@ public class LoginPage extends BasePage {
         loginButton.click();
         return new LoginPage(driver);
     }
+    @Step
+    public LoginPage waitUntilToBeVisibleLoginScreen(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOf(loginButton));
+        return new LoginPage(driver);
+    }
+
     @Override
     public boolean isShown() {
         return ProceedLoginbutton.isDisplayed();
