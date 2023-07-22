@@ -1,3 +1,14 @@
 .idea/
 target/
 *.iml
+.idea
+*.class
+*.DS_Store
+local.properties
+debug.log
+.vscode
+.settings
+# Allure Report
+allure-results/
+.allure
+target\\
