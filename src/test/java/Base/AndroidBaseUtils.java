@@ -23,7 +23,7 @@ public final class AndroidBaseUtils {
 
     static AndroidDriver initDriver(AndroidDriver driver) {
         try {
-            driver = new AndroidDriver(new URL(APPIUM_URL), getLocalCapabilities());
+            driver = new AndroidDriver(new URL(APPIUM_URL), getRealDeviceCapabilities());
             log.info("Appium url: " + APPIUM_URL);
         } catch (Exception ex) {
             throw new RuntimeException("Appium driver could not be initialized." + ex.getMessage());
@@ -34,19 +34,15 @@ public final class AndroidBaseUtils {
 
 
     private static DesiredCapabilities getLocalCapabilities() {
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        //capabilities.setCapability("device", "Android");
         capabilities.setCapability("deviceName", "Pixel_3a");
         capabilities.setCapability("platformName", ANDROID_PLATFORM_NAME);
-        capabilities.setCapability("app", "/Users/antonudovycenko/IdeaProjects/AppiumInstagramDemo/alevel/src/test/resources/" + TEST_APP);
         capabilities.setCapability("autoLaunch", "false");
         capabilities.setCapability("noReset", "true");
         capabilities.setCapability("automationName", "UiAutomator2");
         capabilities.setCapability("platformVersion", "12");
-        capabilities.setCapability("appPackage", "com.instagram.android");
-        capabilities.setCapability("appActivity", "com.instagram.mainactivity.MainActivity");
-        // long timeout is needed for debugging purposes
+        capabilities.setCapability("appPackage", "com.swisscows.search");
+        capabilities.setCapability("appActivity", "com.swisscows.search.MainActivity");
         capabilities.setCapability("newCommandTimeout", 600);
         capabilities.setCapability("unicodeKeyboard", "true");
         capabilities.setCapability("resetKeyboard", "true");
@@ -56,7 +52,6 @@ public final class AndroidBaseUtils {
     private static DesiredCapabilities getSourceLabsCapabilities() {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        //capabilities.setCapability("device", "Android");
         capabilities.setCapability("appiumVersion", "1.22.3");
         capabilities.setCapability("deviceName", "Galaxy S10 WQHD GoogleAPI Emulator");
         capabilities.setCapability("platformName", ANDROID_PLATFORM_NAME);
@@ -71,18 +66,22 @@ public final class AndroidBaseUtils {
         return capabilities;
     }
 
-//    public static DesiredCapabilities getRealDeviceCapabilities() {
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Galaxy S10");
-//        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-//        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
-//        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12");
-//        capabilities.setCapability("appPackage", "com.instagram.android");
-//        capabilities.setCapability("appActivity", "com.instagram.mainactivity.MainActivity");
-//        capabilities.setCapability(MobileCapabilityType.APP, "/Users/antonudovycenko/IdeaProjects/AppiumInstagramDemo/alevel/src/test/resources/" + TEST_APP);
-//        capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
-//        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 600);
-//        return capabilities;
-//    }
+    public static DesiredCapabilities getRealDeviceCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("deviceName", "Galaxy S10");
+        capabilities.setCapability("platformName", ANDROID_PLATFORM_NAME);
+        capabilities.setCapability("autoLaunch", "false");
+        capabilities.setCapability("noReset", "true");
+        capabilities.setCapability("automationName", "UiAutomator2");
+        capabilities.setCapability("platformVersion", "12");
+        capabilities.setCapability("appPackage", "com.swisscows.search");
+        capabilities.setCapability("appActivity", "com.swisscows.search.MainActivity");
+        capabilities.setCapability("newCommandTimeout", 600);
+        capabilities.setCapability("unicodeKeyboard", "true");
+        capabilities.setCapability("resetKeyboard", "true");
+//        capabilities.setCapability("uiautomator2ServerInstallTimeout", 60000);
+        return capabilities;
+    }
+
 
 }
