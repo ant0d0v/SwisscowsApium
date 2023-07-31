@@ -18,11 +18,16 @@ import java.time.Duration;
 
 public class AndroidBaseTest {
 
+    private static final String APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
     public static AndroidDriver driver;
+    private WebDriverWait webDriverWait;
+
     protected AndroidDriver getAndroidDriver() {
         return driver;
     }
-
+    public static String getAppiumUrl() {
+        return APPIUM_URL;
+    }
     @BeforeClass
     public void setUp() {
 
