@@ -11,13 +11,7 @@ public class InstagramTests extends AndroidBaseTest {
     @Test
     public void MainScreenWithSearchTest(){
 
-       openFirstScreen()
-               .waitUntilToBeVisibleLoginScreen()
-               .proceedToLoginPage()
-               .setEmailField()
-               .clickPasswordField()
-               .setPasswordField()
-               .loginButton();
+       openFirstScreen();
 
         assertTrue(new MainMenuPage(getAndroidDriver()).isShown());
     }
