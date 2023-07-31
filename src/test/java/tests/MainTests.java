@@ -6,13 +6,13 @@ import pages.*;
 
 import static org.testng.Assert.assertTrue;
 
-public class InstagramTests extends AndroidBaseTest {
+public class MainTests extends AndroidBaseTest {
 
     @Test
     public void MainScreenWithSearchTest(){
 
        openFirstScreen();
 
-        assertTrue(new MainMenuPage(getAndroidDriver()).isShown());
+        assertTrue(new MainPage(getAndroidDriver()).isShown());
     }
 }
