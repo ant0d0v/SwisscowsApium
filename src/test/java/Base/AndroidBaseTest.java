@@ -3,6 +3,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -11,6 +12,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.MainPage;
 import utils.TestUtils;
+
+import java.time.Duration;
 
 
 public class AndroidBaseTest {
@@ -50,6 +53,17 @@ public class AndroidBaseTest {
     public byte[] captureScreenshot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
+    protected WebDriverWait getWait() {
+        if (webDriverWait == null) {
+            webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        }
+
+        return webDriverWait;
+    }
+    protected AndroidDriver getDriver() {
+        return driver;
+    }
+    
 
     public MainPage openFirstScreen(){
         TestUtils.loadBaseUrlPage(getDriver(), getWait());
