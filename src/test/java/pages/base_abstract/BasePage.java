@@ -15,7 +15,4 @@ public abstract class BasePage {
         PageFactory.initElements(new AppiumFieldDecorator(driver,  Duration.ofSeconds(10)), this);
     }
 
-
-    public abstract boolean isShown();
-
 }

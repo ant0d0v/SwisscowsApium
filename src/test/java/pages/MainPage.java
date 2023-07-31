@@ -4,8 +4,9 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import pages.base_abstract.BasePage;
+import pages.base_abstract.TopMenuPage;
 
-public class MainPage extends  BasePage {
+public class MainPage extends TopMenuPage<MainPage> {
 
 
     @AndroidFindBy(className =  "android.widget.EditText")
@@ -18,9 +19,8 @@ public class MainPage extends  BasePage {
         return new MainPage(driver);
     }
 
-
-    @Override
-    public boolean isShown() {
-        return image.isDisplayed();
+    public boolean logoIsDisplayed() {
+       return image.isDisplayed();
     }
+
 }
