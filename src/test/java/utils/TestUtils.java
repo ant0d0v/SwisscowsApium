@@ -23,6 +23,7 @@ public class TestUtils {
 
     public static void loadBaseUrlPage(AndroidDriver driver, WebDriverWait wait) {
         driver.launchApp();
+        reLoadBaseUrlPage(driver,wait);
     }
 
     public static void reLoadBaseUrlPage(AndroidDriver driver, WebDriverWait wait) {

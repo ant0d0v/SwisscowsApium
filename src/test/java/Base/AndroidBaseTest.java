@@ -72,6 +72,7 @@ public class AndroidBaseTest {
 
     public MainPage openFirstScreen(){
         TestUtils.loadBaseUrlPage(getDriver(), getWait());
+
         if (TestUtils.isH2HeaderExists(getDriver())) {
             Reporter.log("App was opened successfully ", true);
         } else {
