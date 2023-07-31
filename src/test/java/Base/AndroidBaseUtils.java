@@ -31,6 +31,10 @@ public final class AndroidBaseUtils {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return driver;
     }
+    public static void logf(String str, Object... arr) {
+        System.out.printf(str, arr);
+        System.out.println();
+    }
 
 
     private static DesiredCapabilities getLocalCapabilities() {

@@ -4,15 +4,15 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import pages.MainPage;
-import utils.ReportUtils;
 import utils.TestUtils;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 
 
@@ -28,15 +28,10 @@ public class AndroidBaseTest {
     public static String getAppiumUrl() {
         return APPIUM_URL;
     }
-    @BeforeSuite
-    protected void beforeSuite(ITestContext context) {
-        Reporter.log(ReportUtils.getReportHeader(context), true);
-    }
-
     @BeforeClass
-    public void setUp(ITestContext context) {
+    public void setUp() {
+
         driver = AndroidBaseUtils.initDriver(getAndroidDriver());
-        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     @AfterClass
@@ -48,20 +43,15 @@ public class AndroidBaseTest {
     }
 
     @BeforeMethod
-    public void setTestApp(Method method, ITestResult result) {
+    public void setTestApp() {
         getAndroidDriver().resetApp();
-        Reporter.log(ReportUtils.END_LINE, true);
-        Reporter.log("TEST RUN", true);
-        Reporter.log(ReportUtils.getClassNameTestName(method, result), true);
     }
 
     @AfterMethod(alwaysRun = true)
-    public void afterTest(Method method,ITestResult result) {
+    public void afterTest(ITestResult result) {
         if (!result.isSuccess()) {
             captureScreenshot();
         }
-        AndroidBaseUtils.logf("Execution time is %o sec\n\n", (result.getEndMillis() - result.getStartMillis()) / 1000);
-        Reporter.log(ReportUtils.getTestStatistics(method, result), true);
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")
@@ -78,7 +68,7 @@ public class AndroidBaseTest {
     protected AndroidDriver getDriver() {
         return driver;
     }
-    
+
 
     public MainPage openFirstScreen(){
         TestUtils.loadBaseUrlPage(getDriver(), getWait());
