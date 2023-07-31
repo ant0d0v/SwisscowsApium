@@ -4,11 +4,13 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.MainPage;
+import utils.TestUtils;
 
 
 public class AndroidBaseTest {
@@ -50,7 +52,13 @@ public class AndroidBaseTest {
     }
 
     public MainPage openFirstScreen(){
-        getAndroidDriver().launchApp();
+        TestUtils.loadBaseUrlPage(getDriver(), getWait());
+        if (TestUtils.isH2HeaderExists(getDriver())) {
+            Reporter.log("App was opened successfully ", true);
+        } else {
+            TestUtils.reLoadBaseUrlPage(getDriver(), getWait());
+        }
+
         return new MainPage(driver);
     }
 }
