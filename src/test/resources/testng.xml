@@ -3,7 +3,7 @@
 <suite name="Parallel Test Suite" parallel="classes" thread-count="3">
     <test name="Static pages tests" >
         <classes>
-            <class name="tests.InstagramTests"/>
+            <class name="tests.MainTest"/>
         </classes>
     </test>
 </suite>
