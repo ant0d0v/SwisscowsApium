@@ -23,7 +23,7 @@ public final class AndroidBaseUtils {
 
     static AndroidDriver initDriver(AndroidDriver driver) {
         try {
-            driver = new AndroidDriver(new URL(APPIUM_URL), getRealDeviceCapabilities());
+            driver = new AndroidDriver(new URL(APPIUM_URL), getLocalCapabilities());
             log.info("Appium url: " + APPIUM_URL);
         } catch (Exception ex) {
             throw new RuntimeException("Appium driver could not be initialized." + ex.getMessage());
@@ -48,6 +48,7 @@ public final class AndroidBaseUtils {
         capabilities.setCapability("appPackage", "com.swisscows.search");
         capabilities.setCapability("appActivity", "com.swisscows.search.MainActivity");
         capabilities.setCapability("newCommandTimeout", 600);
+        capabilities.setCapability("waitForIdleTimeout", 0);
         capabilities.setCapability("unicodeKeyboard", "true");
         capabilities.setCapability("resetKeyboard", "true");
         return capabilities;
@@ -81,6 +82,7 @@ public final class AndroidBaseUtils {
         capabilities.setCapability("appPackage", "com.swisscows.search");
         capabilities.setCapability("appActivity", "com.swisscows.search.MainActivity");
         capabilities.setCapability("newCommandTimeout", 600);
+        capabilities.setCapability("waitForIdleTimeout", 0);
         capabilities.setCapability("unicodeKeyboard", "true");
         capabilities.setCapability("resetKeyboard", "true");
 //        capabilities.setCapability("uiautomator2ServerInstallTimeout", 60000);

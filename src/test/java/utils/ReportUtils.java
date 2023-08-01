@@ -38,8 +38,8 @@ public class ReportUtils {
         String currentDate = "\tDate: "
                 + DateTimeUtils.getCurrentDateTime()
                 + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
-        String projectName = "\tProject: Swisscows" + "\n";
-        String baseURL = "\tBASE_URL: " + AndroidBaseTest.getAppiumUrl()
+        String projectName = "\tProject: Swisscows Application" + "\n";
+        String baseURL = "\tAPPIUM_URL: " + AndroidBaseTest.getAppiumUrl()
                 + "\t\t\t\t\t\t\t\t\t\t\t" + "\n";
 
         return H_LINE + header + currentDate + projectName + baseURL + H_LINE;
