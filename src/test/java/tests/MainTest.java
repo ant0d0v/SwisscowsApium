@@ -89,6 +89,5 @@ public class MainTest extends AndroidBaseTest {
                  .getTextSearchField();
 
         Assert.assertEquals(actualTextOfTitlesInWebResult, "ivana trump");
-
     }
 }
