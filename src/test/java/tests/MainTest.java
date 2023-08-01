@@ -86,6 +86,7 @@ public class MainTest extends AndroidBaseTest {
                  .waitForSuggestToBeVisible()
                  .clickFirstCriteriaInSuggestion()
                  .waitUntilVisibilityWebResult()
+                 .scrollToButtonShowMoreResult()
                  .getTextSearchField();
 
         Assert.assertEquals(actualTextOfTitlesInWebResult, "ivana trump");

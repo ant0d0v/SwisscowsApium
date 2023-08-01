@@ -102,9 +102,17 @@ public abstract class BasePage {
         int endY = (int) (size.getHeight () * 0.01);
         performScrollUsingSequence(startX,startY,endX,endY);
     }
-    protected void scrollToElement() {
+    protected void scroll() {
         driver.findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
+    }
+    protected void scrollToElement(WebElement element) {;
+
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true))"
+                        + ".scrollIntoView(new UiSelector().resourceId(\"" + element + "\"));"
+        ));
+
     }
     protected void  performScrollUsingSequence(int startX, int startY,int endX, int endY){
         PointerInput finger = new PointerInput (PointerInput. Kind. TOUCH, "first-finger");

@@ -25,7 +25,6 @@ public class WebPage extends TopMenuPage<WebPage> {
         super(driver);
     }
     public WebPage createGeneric() {
-
         return new WebPage(driver);
     }
     public WebPage waitUntilVisibilityWebResult() {
@@ -39,7 +38,7 @@ public class WebPage extends TopMenuPage<WebPage> {
         return getText(searchField);
     }
     public WebPage scrollToButtonShowMoreResult() {
-        performScroll();
+        scrollToElement();
         return new WebPage(driver);
     }
     public WebPage waitUntilVisibilityButtonShowMoreResult(){
