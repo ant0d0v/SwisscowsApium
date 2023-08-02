@@ -23,7 +23,7 @@ public class WebPage extends TopMenuPage<WebPage> {
         super(driver);
     }
     public WebPage createGeneric() {
-        return new WebPage(driver);
+        return new WebPage(androidDriver);
     }
     public WebPage waitUntilVisibilityWebResult() {
         wait10ElementToBeVisible(firstResultOfWebSearch);
@@ -34,7 +34,7 @@ public class WebPage extends TopMenuPage<WebPage> {
     }
 
     public WebPage scrollToButtonShowMoreResult() {
-        return new WebPage(driver);
+        return new WebPage(androidDriver);
     }
     public WebPage waitUntilVisibilityButtonShowMoreResult(){
         wait10ElementToBeVisible(buttonShowMore);

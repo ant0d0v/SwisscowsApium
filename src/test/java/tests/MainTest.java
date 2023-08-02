@@ -1,13 +1,11 @@
 package tests;
 
-import Base.AndroidBaseTest;
+import Base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.*;
 import pages.top_menu.ImagePage;
 import pages.top_menu.MusicPage;
-import pages.top_menu.WebPage;
 import utils.ProjectConstants;
 
 import java.util.List;
@@ -15,11 +13,11 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class MainTest extends AndroidBaseTest {
+public class MainTest extends BaseTest {
 
     @Test
     public void testSuggestEqualsSearchCriteria(){
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(androidDriver);
 
         final List<String> actualSuggestion = openFirstScreen()
                 .inputSearchCriteria("ivan")
@@ -38,7 +36,7 @@ public class MainTest extends AndroidBaseTest {
     }
     @Test
     public void testNothingIsInSuggestAfterInstallationApp(){
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(androidDriver);
         final List<String> expectedSuggestion = List.of(
                 "my images",
                 "my music"
@@ -58,7 +56,7 @@ public class MainTest extends AndroidBaseTest {
     }
     @Test
     public void testSuggestAfterSearch(){
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(androidDriver);
         final List<String> expectedSuggestion = List.of(
                 "my images",
                 "my music",
@@ -106,7 +104,7 @@ public class MainTest extends AndroidBaseTest {
                 .getTextSearchField();
 
         assertEquals(actualTextInSearchResult, "My music");
-        assertTrue(new MusicPage(driver).errorImage_NoTracks_IsDisplayed());
+        assertTrue(new MusicPage(androidDriver).errorImage_NoTracks_IsDisplayed());
     }
     @Test
     public void testMyImagesQueryFromSuggestRedirectToCorrespondingScreen() {
@@ -118,7 +116,7 @@ public class MainTest extends AndroidBaseTest {
                 .waitUntilToBeVisibleErrorImageNoImage()
                 .getTextSearchField();
 
-        assertTrue(new ImagePage(driver).errorImage_NoImage_IsDisplayed());
+        assertTrue(new ImagePage(androidDriver).errorImage_NoImage_IsDisplayed());
         assertEquals(actualTextInSearchResult, "My images");
     }
     @Test
@@ -139,7 +137,7 @@ public class MainTest extends AndroidBaseTest {
     }
     @Test
     public void testPlaceholderOfSearchField() {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(androidDriver);
 
         final String actualTextOfPlaceholder = openFirstScreen()
                 .getTextOfPlaceholder();
@@ -150,7 +148,7 @@ public class MainTest extends AndroidBaseTest {
     }
     @Test
     public void testLoginToAccountUsingLoginIcon() {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(androidDriver);
 
          openFirstScreen()
                 .clickLoginIcon()

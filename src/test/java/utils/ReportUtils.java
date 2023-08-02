@@ -1,6 +1,6 @@
 package utils;
 
-import Base.AndroidBaseTest;
+import Base.BaseTest;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 
@@ -39,7 +39,7 @@ public class ReportUtils {
                 + DateTimeUtils.getCurrentDateTime()
                 + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
         String projectName = "\tProject: Swisscows Application" + "\n";
-        String baseURL = "\tAPPIUM_URL: " + AndroidBaseTest.getAppiumUrl()
+        String baseURL = "\tAPPIUM_URL: " + BaseTest.getAppiumUrl()
                 + "\t\t\t\t\t\t\t\t\t\t\t" + "\n";
 
         return H_LINE + header + currentDate + projectName + baseURL + H_LINE;

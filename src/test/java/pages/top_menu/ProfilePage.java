@@ -13,7 +13,7 @@ public class ProfilePage extends TopMenuPage<ProfilePage> {
         super(driver);
     }
     public ProfilePage createGeneric() {
-        return new ProfilePage(driver);
+        return new ProfilePage(androidDriver);
     }
 
     public String getTitleProfile() {

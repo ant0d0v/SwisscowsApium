@@ -14,11 +14,11 @@ public class MusicPage extends TopMenuPage<MusicPage> {
     }
     public MusicPage createGeneric() {
 
-        return new MusicPage(driver);
+        return new MusicPage(androidDriver);
     }
     public MusicPage waitUntilToBeVisibleErrorImageNoTrack(){
         wait10ElementToBeVisible(errorImageNoTrack);
-        return new MusicPage(driver);
+        return new MusicPage(androidDriver);
     }
     public boolean errorImage_NoTracks_IsDisplayed(){
         return errorImageNoTrack.isDisplayed();

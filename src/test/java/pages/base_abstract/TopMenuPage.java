@@ -1,5 +1,6 @@
 package pages.base_abstract;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import pages.MainPage;
@@ -41,6 +42,9 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     public TopMenuPage(AndroidDriver driver) {
         super(driver);
     }
+    public TopMenuPage(IOSDriver iosDriver) {
+        super(iosDriver);
+    }
 
     public abstract Generic createGeneric();
 
@@ -49,7 +53,7 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     }
     public MainPage clickSwisscowsLogo() {
         logoSwisscows.click();
-        return new MainPage(driver);
+        return new MainPage(androidDriver);
     }
     public List<String> getAllTextOfElementsInSuggest() {
         List<String> textList = new ArrayList<>();
@@ -73,6 +77,6 @@ public abstract class TopMenuPage<Generic> extends BasePage {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         loginButton.click();
-        return new MainPage(driver);
+        return new MainPage(androidDriver);
     }
 }
