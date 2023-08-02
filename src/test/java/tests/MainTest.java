@@ -5,10 +5,14 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.*;
+import pages.top_menu.ImagePage;
+import pages.top_menu.MusicPage;
 import pages.top_menu.WebPage;
+import utils.ProjectConstants;
 
 import java.util.List;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class MainTest extends AndroidBaseTest {
@@ -47,8 +51,8 @@ public class MainTest extends AndroidBaseTest {
 
         final int actualSizeSuggest = mainPage.getAllTextOfElementsInSuggest().size();
 
-        Assert.assertEquals(actualSizeSuggest, 2);
-        Assert.assertEquals(actualSuggestion,expectedSuggestion);
+        assertEquals(actualSizeSuggest, 2);
+        assertEquals(actualSuggestion,expectedSuggestion);
         assertTrue(mainPage.suggestIsDisplayed());
         assertTrue(mainPage.iconsInSuggestAreDisplayed());
     }
@@ -62,6 +66,7 @@ public class MainTest extends AndroidBaseTest {
         );
 
         final List<String> actualSuggestion = openFirstScreen()
+                .clickSearchField()
                 .inputSearchCriteriaAndEnter("ivan")
                 .waitUntilVisibilityWebResult()
                 .clickSwisscowsLogo()
@@ -71,15 +76,15 @@ public class MainTest extends AndroidBaseTest {
 
         final int actualSizeSuggest = mainPage.getAllTextOfElementsInSuggest().size();
 
-        Assert.assertEquals(actualSizeSuggest, 3);
-        Assert.assertEquals(actualSuggestion,expectedSuggestion);
+        assertEquals(actualSizeSuggest, 3);
+        assertEquals(actualSuggestion,expectedSuggestion);
         assertTrue(mainPage.suggestIsDisplayed());
         assertTrue(mainPage.iconsInSuggestAreDisplayed());
     }
     @Test
     public void testSearchWithQueryFromSuggest() {
 
-       final String actualTextOfTitlesInWebResult = openFirstScreen()
+       final String actualTextInSearchResult = openFirstScreen()
                  .inputSearchCriteria("ivan")
                  .clickSearchField()
                  .inputSearchCriteria("ivan")
@@ -88,6 +93,82 @@ public class MainTest extends AndroidBaseTest {
                  .waitUntilVisibilityWebResult()
                  .getTextSearchField();
 
-        Assert.assertEquals(actualTextOfTitlesInWebResult, "ivana trump");
+        assertEquals(actualTextInSearchResult, "ivana trump");
+    }
+    @Test
+    public void testMyMusicQueryFromSuggestRedirectToCorrespondingScreen() {
+
+        final String actualTextInSearchResult = openFirstScreen()
+                .clickSearchField()
+                .waitForSuggestToBeVisible()
+                .clickMyMusicInSuggestion()
+                .waitUntilToBeVisibleErrorImageNoTrack()
+                .getTextSearchField();
+
+        assertEquals(actualTextInSearchResult, "My music");
+        assertTrue(new MusicPage(driver).errorImage_NoTracks_IsDisplayed());
+    }
+    @Test
+    public void testMyImagesQueryFromSuggestRedirectToCorrespondingScreen() {
+
+        final String actualTextInSearchResult = openFirstScreen()
+                .clickSearchField()
+                .waitForSuggestToBeVisible()
+                .clickMyImagesInSuggestion()
+                .waitUntilToBeVisibleErrorImageNoImage()
+                .getTextSearchField();
+
+        assertTrue(new ImagePage(driver).errorImage_NoImage_IsDisplayed());
+        assertEquals(actualTextInSearchResult, "My images");
+    }
+    @Test
+    public void testSearchWithQueryFromRecent() {
+
+        final String actualTextInSearchResult  = openFirstScreen()
+                .clickSearchField()
+                .inputSearchCriteriaAndEnter("ivan")
+                .waitUntilVisibilityWebResult()
+                .clickSwisscowsLogo()
+                .clickSearchField()
+                .waitForSuggestToBeVisible()
+                .clickRecentSearchesInSuggestion()
+                .waitUntilVisibilityWebResult()
+                .getTextSearchField();;
+
+        assertEquals(actualTextInSearchResult,"ivan");
+    }
+    @Test
+    public void testPlaceholderOfSearchField() {
+        MainPage mainPage = new MainPage(driver);
+
+        final String actualTextOfPlaceholder = openFirstScreen()
+                .getTextOfPlaceholder();
+
+        Assert.assertTrue(mainPage.loginButtonIsDisplayed());
+        Assert.assertTrue(mainPage.logoSwisscowsIsDisplayed());
+        assertEquals(actualTextOfPlaceholder, "Search...");
+    }
+    @Test
+    public void testLoginToAccountUsingLoginIcon() {
+        MainPage mainPage = new MainPage(driver);
+
+         openFirstScreen()
+                .clickLoginIcon()
+                .loginToAccount(ProjectConstants.SWISSCOWS_EMAIL_USER,ProjectConstants.PASSWORD)
+                .waitForAvatarOnMainScreenToBeVisible();
+
+         assertTrue(mainPage.avatarIsDisplayed() );
+    }
+    @Test
+    public void testOpenUserProfileAfterLoginToAccount() {
+
+        final String actualTitle = openFirstScreen()
+                .clickLoginIcon()
+                .loginToAccount(ProjectConstants.SWISSCOWS_EMAIL_USER,ProjectConstants.PASSWORD)
+                .waitForAvatarOnMainScreenToBeVisible()
+                .clickLoginIconAfterLoggingIn()
+                .getTitleProfile();
+
+        assertEquals(actualTitle, "Your Profile");
     }
 }

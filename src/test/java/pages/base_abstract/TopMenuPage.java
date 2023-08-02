@@ -19,9 +19,24 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"
             + "/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView")
     private List<WebElement> allCriteriaInSuggestion;
+    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup"
+            + "/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.EditText")
+    private WebElement placeholderOfSearchField;
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"
             + "/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView")
     private List<WebElement> iconsInSuggestion;
+    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/"
+            + "android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
+    private WebElement emailField;
+   // @AndroidFindBy(xpath = "//android.widget.FrameLayout[2]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText")
+   // private WebElement passwordField;
+
+    @AndroidFindBy(xpath = "//android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
+    private WebElement passwordField; //real device
+    @AndroidFindBy(xpath =  "//android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.widget.Button")
+    private WebElement loginButton;
+    @AndroidFindBy(className =  "android.widget.EditText")
+    private WebElement searchField;
 
     public TopMenuPage(AndroidDriver driver) {
         super(driver);
@@ -43,7 +58,21 @@ public abstract class TopMenuPage<Generic> extends BasePage {
         }
         return textList;
     }
+    public String getTextOfPlaceholder() {
+        return placeholderOfSearchField.getText();
+    }
+    public String getTextSearchField() {
+
+        return getText(searchField);
+    }
     public boolean iconsInSuggestAreDisplayed() {
-        return  areElementsInListDisplayed(iconsInSuggestion) ;
+        return areElementsInListDisplayed(iconsInSuggestion) ;
+    }
+    public MainPage loginToAccount(String email, String password){
+        wait10ElementToBeVisible(emailField);
+        emailField.sendKeys(email);
+        passwordField.sendKeys(password);
+        loginButton.click();
+        return new MainPage(driver);
     }
 }

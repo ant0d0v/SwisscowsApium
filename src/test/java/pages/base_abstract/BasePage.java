@@ -1,6 +1,7 @@
 package pages.base_abstract;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
@@ -44,6 +45,7 @@ public abstract class BasePage {
 
         return actions;
     }
+
     protected String getText(WebElement element) {
         if (!element.getText().isEmpty()) {
             wait10ElementToBeVisible(element);
@@ -100,6 +102,18 @@ public abstract class BasePage {
         int startY = size.getHeight()  ;
         int endY = (int) (size.getHeight () * 0.01);
         performScrollUsingSequence(startX,startY,endX,endY);
+    }
+    protected void scroll() {
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
+    }
+    protected void scrollToElement(WebElement element) {;
+
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true))"
+                        + ".scrollIntoView(new UiSelector().resourceId(\"" + element + "\"));"
+        ));
+
     }
     protected void  performScrollUsingSequence(int startX, int startY,int endX, int endY){
         PointerInput finger = new PointerInput (PointerInput. Kind. TOUCH, "first-finger");
