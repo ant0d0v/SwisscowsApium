@@ -45,6 +45,7 @@ public abstract class BasePage {
 
         return actions;
     }
+
     protected String getText(WebElement element) {
         if (!element.getText().isEmpty()) {
             wait10ElementToBeVisible(element);
