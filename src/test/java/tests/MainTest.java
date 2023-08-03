@@ -65,7 +65,8 @@ public class MainTest extends BaseTest {
 
         final List<String> actualSuggestion = openFirstScreen()
                 .clickSearchField()
-                .inputSearchCriteriaAndEnter("ivan")
+                .inputSearchCriteria("ivan")
+                .clickEnterForAndroid()
                 .waitUntilVisibilityWebResult()
                 .clickSwisscowsLogo()
                 .clickSearchField()
@@ -124,7 +125,8 @@ public class MainTest extends BaseTest {
 
         final String actualTextInSearchResult  = openFirstScreen()
                 .clickSearchField()
-                .inputSearchCriteriaAndEnter("ivan")
+                .inputSearchCriteria("ivan")
+                .clickEnterForAndroid()
                 .waitUntilVisibilityWebResult()
                 .clickSwisscowsLogo()
                 .clickSearchField()

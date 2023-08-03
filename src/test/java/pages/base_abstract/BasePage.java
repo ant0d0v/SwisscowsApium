@@ -30,32 +30,31 @@ public abstract class BasePage {
     private WebDriverWait webDriverWait10;
     private Actions actions;
 
-    public BasePage(AndroidDriver androidDriver) {
-        this.androidDriver = androidDriver;
-        PageFactory.initElements(new AppiumFieldDecorator(androidDriver, Duration.ofSeconds(10)), this);
+        public BasePage(AppiumDriver appiumDriver) {
+        this.appiumDriver = appiumDriver;
+        PageFactory.initElements(new AppiumFieldDecorator(appiumDriver, Duration.ofSeconds(10)), this);
     }
-
     public BasePage(IOSDriver iosDriver) {
-        this.iosDriver = iosDriver;
+        this.appiumDriver = iosDriver;
         PageFactory.initElements(new AppiumFieldDecorator(iosDriver, Duration.ofSeconds(10)), this);
     }
 
-    protected WebDriverWait getWebDriverWait10() {
-        if (webDriverWait10 == null) {
-            webDriverWait10 = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        }
-        return webDriverWait10;
+    // Constructor for Android
+    public BasePage(AndroidDriver androidDriver) {
+        this.appiumDriver = androidDriver;
+        PageFactory.initElements(new AppiumFieldDecorator(androidDriver, Duration.ofSeconds(10)), this);
     }
+
     protected WebDriverWait getWait10() {
         if (webDriverWait10 == null) {
-            webDriverWait10 = new WebDriverWait(getAndroidDriver(), Duration.ofSeconds(10));
+            webDriverWait10 = new WebDriverWait(getAppiumDriver() , Duration.ofSeconds(10));
         }
 
         return webDriverWait10;
     }
     protected Actions getActions() {
         if (actions == null) {
-            actions = new Actions(getDriver());
+            actions = new Actions(getAppiumDriver());
         }
 
         return actions;
@@ -106,12 +105,14 @@ public abstract class BasePage {
 
         return result;
     }
-    protected void clickEnter(WebElement element) {
-        getWait10().until(ExpectedConditions.visibilityOf(element));
-        androidDriver.pressKey(new KeyEvent(AndroidKey.ENTER));
+    protected void clickEnterForAndroidPlatform() {
+        if (appiumDriver instanceof AndroidDriver) {
+            AndroidDriver androidDriver = (AndroidDriver ) appiumDriver;
+            androidDriver.pressKey(new KeyEvent(AndroidKey.ENTER));
+        }
     }
     protected void performScroll() {
-        Dimension size = getDriver().manage().window().getSize();
+        Dimension size = getAppiumDriver().manage().window().getSize();
         int startX = size.getWidth() / 2 ;
         int endX = size.getWidth() ;
         int startY = size.getHeight()  ;
@@ -119,12 +120,12 @@ public abstract class BasePage {
         performScrollUsingSequence(startX,startY,endX,endY);
     }
     protected void scroll() {
-        getDriver().findElement(MobileBy.AndroidUIAutomator(
+        getAppiumDriver() .findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
     }
     protected void scrollToElement(WebElement element) {;
 
-        getDriver().findElement(MobileBy.AndroidUIAutomator(
+        getAppiumDriver().findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true))"
                         + ".scrollIntoView(new UiSelector().resourceId(\"" + element + "\"));"
         ));
@@ -137,19 +138,11 @@ public abstract class BasePage {
                 .addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg() ))
                 .addAction (finger.createPointerMove(Duration.ofMillis(300), PointerInput.Origin.viewport(),endX, endY))
                 .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-        ((AppiumDriver) (getDriver())) .perform(Collections.singletonList (sequence));
-    }
-    protected AndroidDriver getAndroidDriver() {
-        return androidDriver;
+        ((AppiumDriver) (getAppiumDriver() )) .perform(Collections.singletonList (sequence));
     }
 
-    protected IOSDriver getIOSDriver() {
-        return iosDriver;
+    protected AppiumDriver getAppiumDriver() {
+        return appiumDriver;
     }
-
-    protected AppiumDriver getDriver() {
-        return androidDriver != null ? androidDriver : iosDriver;
-    }
-
 
 }
