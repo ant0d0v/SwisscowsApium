@@ -1,4 +1,4 @@
-package tests;
+package tests.android_platform;
 
 import Base.BaseTest;
 import org.testng.Assert;
