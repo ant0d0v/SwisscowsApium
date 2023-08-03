@@ -1,20 +1,17 @@
 package utils;
 
-import Base.AndroidBaseTest;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -25,7 +22,22 @@ public class TestUtils {
         driver.launchApp();
         reLoadBaseUrlPage(driver,wait);
     }
+    public static void loadBaseUrlPage(IOSDriver driver, WebDriverWait wait) {
+        driver.launchApp();
+        reLoadBaseUrlPage(driver,wait);
+    }
 
+    public static void reLoadBaseUrlPage(IOSDriver driver , WebDriverWait wait) {
+        int count = 0;
+        while (count <= 3 && !(isH2HeaderExists(driver))) {
+            loadBaseUrlPage(driver , wait);
+            count++;
+        }
+
+        if (count == 3 && !isH2HeaderExists(driver)) {
+            Reporter.log("!!!!! Error !!!!! BaseURL page was NOT loaded. Re-Run jobs\n", true);
+        }
+    }
     public static void reLoadBaseUrlPage(AndroidDriver driver, WebDriverWait wait) {
         int count = 0;
         while (count <= 3 && !(isH2HeaderExists(driver))) {
@@ -38,6 +50,15 @@ public class TestUtils {
         }
     }
 
+    public static boolean isH2HeaderExists(IOSDriver driver) {
+        boolean isExists = true;
+        try {
+            driver.findElement(H2_HEADER);
+        } catch (NoSuchElementException e) {
+            isExists = false;
+        }
+        return isExists;
+    }
     public static boolean isH2HeaderExists(AndroidDriver driver) {
         boolean isExists = true;
         try {

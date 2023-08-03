@@ -1,6 +1,8 @@
 package pages.top_menu;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -19,11 +21,17 @@ public class WebPage extends TopMenuPage<WebPage> {
     private WebElement buttonShowMore;
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView")
     private List<WebElement> allResultOfWebSearch;
-    public WebPage(AndroidDriver driver){
-        super(driver);
+    public WebPage(AppiumDriver appiumDriver){
+        super(appiumDriver);
+    }
+    public  WebPage (IOSDriver iosDriver) {
+        super(iosDriver);
+    }
+    public WebPage (AndroidDriver androidDriver) {
+        super(androidDriver);
     }
     public WebPage createGeneric() {
-        return new WebPage(driver);
+        return new WebPage(appiumDriver);
     }
     public WebPage waitUntilVisibilityWebResult() {
         wait10ElementToBeVisible(firstResultOfWebSearch);
@@ -34,7 +42,7 @@ public class WebPage extends TopMenuPage<WebPage> {
     }
 
     public WebPage scrollToButtonShowMoreResult() {
-        return new WebPage(driver);
+        return new WebPage(appiumDriver);
     }
     public WebPage waitUntilVisibilityButtonShowMoreResult(){
         wait10ElementToBeVisible(buttonShowMore);

@@ -1,18 +1,20 @@
 package Base;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-public final class AndroidBaseUtils {
+public final class IOSBaseUtils {
     private static final String APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
     private static final String USERNAME = "oauth-gosu1203-b638e";
     //    private static final String ACCESS_KEY = "d12a01b0-33d2-4575-80ae-5a0817a307e2";
 //    private static final String APPIUM_URL = "https://" + USERNAME + ":" + ACCESS_KEY
 //            + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub";
-    private static final String ANDROID_PLATFORM_NAME = "Android";
+    private static final String ANDROID_PLATFORM_NAME = "IOS";
     private static final String TEST_APP = "instagram.apk";
     private static final Logger log = Logger.getLogger(BaseTest.class.getName());
 
@@ -20,9 +22,9 @@ public final class AndroidBaseUtils {
         return APPIUM_URL;
     }
 
-    static AndroidDriver initDriver(AndroidDriver driver) {
+    static IOSDriver initDriver(IOSDriver driver) {
         try {
-            driver = new AndroidDriver(new URL(APPIUM_URL), getLocalCapabilities());
+            driver = new IOSDriver(new URL(APPIUM_URL), getLocalCapabilities());
             log.info("Appium url: " + APPIUM_URL);
         } catch (Exception ex) {
             throw new RuntimeException("Appium driver could not be initialized." + ex.getMessage());

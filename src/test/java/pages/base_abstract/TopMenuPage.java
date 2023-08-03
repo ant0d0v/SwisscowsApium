@@ -1,5 +1,7 @@
 package pages.base_abstract;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import pages.MainPage;
@@ -28,18 +30,24 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/"
             + "android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
     private WebElement emailField;
-   // @AndroidFindBy(xpath = "//android.widget.FrameLayout[2]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText")
-   // private WebElement passwordField;
-
-    @AndroidFindBy(xpath = "//android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
-    private WebElement passwordField; //real device
-    @AndroidFindBy(xpath =  "//android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.widget.Button")
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
+            + "/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
+    private WebElement passwordField;
+    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
+            + "/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.widget.Button")
     private WebElement loginButton;
     @AndroidFindBy(className =  "android.widget.EditText")
     private WebElement searchField;
 
-    public TopMenuPage(AndroidDriver driver) {
-        super(driver);
+    public TopMenuPage(AppiumDriver appiumDriver) {
+        super(appiumDriver);
+    }
+    public TopMenuPage(IOSDriver iosDriver) {
+        super(iosDriver);
+    }
+
+    public TopMenuPage(AndroidDriver androidDriver) {
+        super(androidDriver);
     }
 
     public abstract Generic createGeneric();
@@ -49,7 +57,7 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     }
     public MainPage clickSwisscowsLogo() {
         logoSwisscows.click();
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
     public List<String> getAllTextOfElementsInSuggest() {
         List<String> textList = new ArrayList<>();
@@ -73,6 +81,6 @@ public abstract class TopMenuPage<Generic> extends BasePage {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         loginButton.click();
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
 }

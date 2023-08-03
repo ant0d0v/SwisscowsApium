@@ -1,7 +1,10 @@
 package pages;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import pages.base_abstract.TopMenuPage;
 import pages.top_menu.ImagePage;
@@ -15,6 +18,7 @@ import java.util.List;
 public class MainPage extends TopMenuPage<MainPage> {
 
 
+    @iOSXCUITFindBy(className =  "android.widget.EditText")
     @AndroidFindBy(className =  "android.widget.EditText")
     private WebElement searchField;
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"
@@ -36,16 +40,23 @@ public class MainPage extends TopMenuPage<MainPage> {
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout"
             + "/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup")
     private WebElement loginIcon;
-    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup"
-            + "/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.ImageView")
+    @AndroidFindBy(className =  "android.widget.ImageView")
     private WebElement avatarOfProfile;
 
 
-    public MainPage(AndroidDriver driver){
-        super(driver);
+    public MainPage(AppiumDriver appiumDriver){
+        super(appiumDriver);
     }
+    public MainPage(IOSDriver iosDriver) {
+        super(iosDriver);
+    }
+
+    public MainPage(AndroidDriver androidDriver) {
+        super(androidDriver);
+    }
+
     public MainPage createGeneric() {
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
 
     public boolean loginButtonIsDisplayed() {
@@ -59,31 +70,31 @@ public class MainPage extends TopMenuPage<MainPage> {
     }
     public MainPage clickSearchField() {
         searchField.click();
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
     public MainPage clickLoginIcon() {
       loginIcon.click();
-      return new MainPage(driver);
+      return new MainPage(appiumDriver);
     }
     public MusicPage clickMyMusicInSuggestion() {
         myMusicInSuggestion.click();
-        return new MusicPage(driver);
+        return new MusicPage(appiumDriver);
     }
     public ImagePage clickMyImagesInSuggestion() {
         myImagesInSuggestion.click();
-        return new ImagePage(driver);
+        return new ImagePage(appiumDriver);
     }
     public ProfilePage clickLoginIconAfterLoggingIn() {
         clickLoginIcon();
-        return new ProfilePage(driver);
+        return new ProfilePage(appiumDriver);
     }
     public WebPage clickFirstCriteriaInSuggestion() {
         firstCriteriaInSuggestion.click();
-        return new WebPage(driver);
+        return new WebPage(appiumDriver);
     }
     public WebPage clickRecentSearchesInSuggestion() {
         recentSearchesInSuggestion.click();
-        return new WebPage(driver);
+        return new WebPage(appiumDriver);
     }
     public MainPage inputSearchCriteria(String text) {
         searchField.sendKeys(text);
@@ -91,16 +102,15 @@ public class MainPage extends TopMenuPage<MainPage> {
     }
     public MainPage waitForSuggestToBeVisible() {
         wait10ElementToBeVisible(suggest);
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
     public MainPage waitForAvatarOnMainScreenToBeVisible() {
         wait10ElementToBeVisible(avatarOfProfile);
-        return new MainPage(driver);
+        return new MainPage(appiumDriver);
     }
-    public WebPage inputSearchCriteriaAndEnter(String text) {
-        searchField.sendKeys(text);
-        clickEnter(searchField);
-        return new WebPage(driver);
+    public WebPage clickEnterForAndroid() {
+        clickEnterForAndroidPlatform();
+        return new WebPage(appiumDriver);
     }
 
 }
