@@ -50,7 +50,7 @@ public class BaseTest {
     @BeforeClass
     public void setUpIOSDriver(ITestContext context) {
         setUpAndroidDriver();
-        //etUpIOSDriver();
+        //
     }
 
     @AfterClass
@@ -112,10 +112,20 @@ public class BaseTest {
         TestUtils.loadBaseUrlPage(getAndroidDriver(), getWait());
 
         if (TestUtils.isH2HeaderExists(getAndroidDriver())) {
-            Reporter.log("App was opened successfully ", true);
+            Reporter.log("App was opened successfully on Android platform ", true);
         } else {
             TestUtils.reLoadBaseUrlPage(getAndroidDriver(), getWait());
         }
         return new MainPage(getAndroidDriver());
+    }
+    public MainPage openFirstScreenOnIOS(){
+        TestUtils.loadBaseUrlPage(getIOSDriver(), getWait());
+
+        if (TestUtils.isH2HeaderExists(getIOSDriver())) {
+            Reporter.log("App was opened successfully on IOS platform ", true);
+        } else {
+            TestUtils.reLoadBaseUrlPage(getIOSDriver(), getWait());
+        }
+        return new MainPage(getIOSDriver());
     }
 }

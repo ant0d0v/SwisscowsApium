@@ -30,7 +30,7 @@ public abstract class BasePage {
     private WebDriverWait webDriverWait10;
     private Actions actions;
 
-        public BasePage(AppiumDriver appiumDriver) {
+    public BasePage(AppiumDriver appiumDriver) {
         this.appiumDriver = appiumDriver;
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver, Duration.ofSeconds(10)), this);
     }
@@ -38,11 +38,16 @@ public abstract class BasePage {
         this.appiumDriver = iosDriver;
         PageFactory.initElements(new AppiumFieldDecorator(iosDriver, Duration.ofSeconds(10)), this);
     }
-
-    // Constructor for Android
     public BasePage(AndroidDriver androidDriver) {
         this.appiumDriver = androidDriver;
         PageFactory.initElements(new AppiumFieldDecorator(androidDriver, Duration.ofSeconds(10)), this);
+    }
+    private String getPlatformVar () {
+        return System.getenv("ios");
+    }
+
+    protected AppiumDriver getAppiumDriver() {
+        return appiumDriver;
     }
 
     protected WebDriverWait getWait10() {
@@ -107,7 +112,7 @@ public abstract class BasePage {
     }
     protected void clickEnterForAndroidPlatform() {
         if (appiumDriver instanceof AndroidDriver) {
-            AndroidDriver androidDriver = (AndroidDriver ) appiumDriver;
+            androidDriver = (AndroidDriver ) appiumDriver;
             androidDriver.pressKey(new KeyEvent(AndroidKey.ENTER));
         }
     }
@@ -139,10 +144,6 @@ public abstract class BasePage {
                 .addAction (finger.createPointerMove(Duration.ofMillis(300), PointerInput.Origin.viewport(),endX, endY))
                 .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         ((AppiumDriver) (getAppiumDriver() )) .perform(Collections.singletonList (sequence));
-    }
-
-    protected AppiumDriver getAppiumDriver() {
-        return appiumDriver;
     }
 
 }
