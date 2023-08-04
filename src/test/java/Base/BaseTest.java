@@ -50,7 +50,7 @@ public class BaseTest {
     @BeforeClass
     public void setUpIOSDriver(ITestContext context) {
         setUpAndroidDriver();
-        //
+       // setUpIOSDriver();
     }
 
     @AfterClass

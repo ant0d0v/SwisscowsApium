@@ -32,11 +32,12 @@ public final class IOSBaseUtils {
     private static DesiredCapabilities getLocalCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("platformVersion", "16.4");
-        capabilities.setCapability("deviceName", "iPhone 14");
+        capabilities.setCapability("platformVersion", "14.2");
+        capabilities.setCapability("deviceName", "iPhone 12");
         capabilities.setCapability("bundleId", "com.swisscows.search");
         capabilities.setCapability("noReset", "true");
-        capabilities.setCapability("automationName", "XCUITest");
+        capabilities.setCapability("automationName", "");
+      //  capabilities.setCapability("udid", "MYUDID");
         return capabilities;
     }
 }
