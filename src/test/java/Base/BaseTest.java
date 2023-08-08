@@ -14,6 +14,7 @@ import utils.ReportUtils;
 import utils.TestUtils;
 
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.time.Duration;
 
 
@@ -48,9 +49,15 @@ public class BaseTest {
     }
 
     @BeforeClass
-    public void setUpIOSDriver(ITestContext context) {
-        setUpAndroidDriver();
-       // setUpIOSDriver();
+    @Parameters("platform")
+    public void setUpDriver(ITestContext context, @Optional("android")String platform) throws MalformedURLException {
+        if ("android".equalsIgnoreCase(platform)) {
+            setUpAndroidDriver();
+        } else if ("ios".equalsIgnoreCase(platform)) {
+            setUpIOSDriver();
+        } else {
+            throw new IllegalArgumentException("Unsupported platform: " + platform);
+        }
     }
 
     @AfterClass

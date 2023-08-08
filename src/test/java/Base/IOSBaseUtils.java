@@ -36,7 +36,7 @@ public final class IOSBaseUtils {
         capabilities.setCapability("deviceName", "iPhone 12");
         capabilities.setCapability("bundleId", "com.swisscows.search");
         capabilities.setCapability("noReset", "true");
-        capabilities.setCapability("automationName", "");
+        capabilities.setCapability("automationName", "XCUITest");
       //  capabilities.setCapability("udid", "MYUDID");
         return capabilities;
     }

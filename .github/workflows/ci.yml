@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  run-test:
+    name: 'Run tests'
+    runs-on: ubuntu-latest
+
+    env:
+      ANDROID_SDK_ROOT: /usr/local/android-sdk
+      ANDROID_HOME: /usr/local/android-sdk
+
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          sdk-platform: '29'
+          ndk-version: '21.4.7075529'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+      - name: Start Android Emulator
+        run: emulator -avd Pixel 3a -no-audio -no-window &
+        if: runner.os == 'Linux'
+
+      - name: Start iOS Simulator
+        run: sudo xcrun simctl boot iPhone 14
+        if: runner.os == 'macOS'
+
+      - name: Wait for Emulator to Start
+        run: sleep 120
+
+      - name: Run Maven test
+        run: mvn -B package clean test --file pom.xml
+        env:
+          CHROME_OPTIONS: --disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless;--window-size=1920,1080
+          CI_RUN: true
+
+      - name: Stop Android Emulator
+        run: adb emu kill
+        if: runner.os == 'Linux'
+
+      - name: Stop iOS Simulator
+        run: sudo xcrun simctl shutdown all
+        if: runner.os == 'macOS'

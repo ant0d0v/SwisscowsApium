@@ -2,13 +2,16 @@ package pages.base_abstract;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.PointerInput;
@@ -21,6 +24,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public abstract class BasePage {
 
@@ -28,6 +32,7 @@ public abstract class BasePage {
     protected IOSDriver iosDriver;
     protected AppiumDriver appiumDriver;
     private WebDriverWait webDriverWait10;
+    private  TouchAction touchAction;
     private Actions actions;
 
     public BasePage(AppiumDriver appiumDriver) {
@@ -42,6 +47,7 @@ public abstract class BasePage {
         this.appiumDriver = androidDriver;
         PageFactory.initElements(new AppiumFieldDecorator(androidDriver, Duration.ofSeconds(10)), this);
     }
+
     private String getPlatformVar () {
         return System.getenv("ios");
     }
@@ -64,6 +70,11 @@ public abstract class BasePage {
 
         return actions;
     }
+    public AndroidDriver getAndroidDriver() {
+        return androidDriver;
+    }
+
+
 
     protected String getText(WebElement element) {
         if (!element.getText().isEmpty()) {
@@ -128,6 +139,20 @@ public abstract class BasePage {
         getAppiumDriver() .findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
     }
+    public void hold(WebElement startPoint, int waitOptions) {
+        TouchAction action = new TouchAction((PerformsTouchActions) appiumDriver);
+        action.press(ElementOption.element(startPoint))
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(waitOptions)))
+                .release()
+                .perform();
+    }
+    public void holdIOS(WebElement startPoint, int waitOptions) {
+        TouchAction action = new TouchAction((PerformsTouchActions) appiumDriver);
+        action.press(ElementOption.element(startPoint))
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(waitOptions)))
+                .release()
+                .perform();
+    }
     protected void scrollToElement(WebElement element) {;
 
         getAppiumDriver().findElement(MobileBy.AndroidUIAutomator(
@@ -135,6 +160,9 @@ public abstract class BasePage {
                         + ".scrollIntoView(new UiSelector().resourceId(\"" + element + "\"));"
         ));
 
+    }
+    public String getCurrentActivity() {
+        return getAndroidDriver().getCurrentUrl();
     }
     protected void  performScrollUsingSequence(int startX, int startY,int endX, int endY){
         PointerInput finger = new PointerInput (PointerInput. Kind. TOUCH, "first-finger");

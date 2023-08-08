@@ -8,7 +8,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import pages.MainPage;
-import pages.top_menu.WebPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,24 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/"
             + "android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
     private WebElement emailField;
+    @iOSXCUITFindBy (id = "search btn")
+    @AndroidFindBy(className=  "android.widget.Image")
+    private WebElement imageOfScreenshot;
+    @iOSXCUITFindBy (id = "search btn")
+    @AndroidFindBy(xpath=   "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
+            + "/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]"
+            + "/android.view.ViewGroup[2]/android.view.ViewGroup[1]")
+    private WebElement openButtonInWebPreview;
+    @iOSXCUITFindBy (id = "search btn")
+    @AndroidFindBy(xpath=   "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
+            + "/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]"
+            + "/android.view.ViewGroup[2]/android.view.ViewGroup[2]")
+    private WebElement copyButtonInWebPreview;
+    @iOSXCUITFindBy (id = "search btn")
+    @AndroidFindBy(xpath=   "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
+            + "/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]"
+            + "/android.view.ViewGroup[2]/android.view.ViewGroup[3]")
+    private WebElement shareButtonInWebPreview;
     @AndroidFindAll(value = {
             @AndroidBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"
                      + "/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
@@ -54,6 +71,8 @@ public abstract class TopMenuPage<Generic> extends BasePage {
     private WebElement loginButton;
     @AndroidFindBy(className =  "android.widget.EditText")
     private WebElement searchField;
+    @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]")
+    private WebElement headerSwisscowsApp;
 
     public TopMenuPage(AppiumDriver appiumDriver) {
         super(appiumDriver);
@@ -86,11 +105,16 @@ public abstract class TopMenuPage<Generic> extends BasePage {
         return placeholderOfSearchField.getText();
     }
     public String getTextSearchField() {
-
         return getText(searchField);
+    }
+    public void clickOpenButtonInWebPreview() {
+         openButtonInWebPreview.click();
     }
     public boolean iconsInSuggestAreDisplayed() {
         return areElementsInListDisplayed(iconsInSuggestion) ;
+    }
+    public boolean headerSwisscowsAppIsDisplayed() {
+        return headerSwisscowsApp.isDisplayed() ;
     }
     public MainPage loginToAccount(String email, String password){
         wait10ElementToBeVisible(emailField);
@@ -99,4 +123,5 @@ public abstract class TopMenuPage<Generic> extends BasePage {
         loginButton.click();
         return new MainPage(appiumDriver);
     }
+
 }

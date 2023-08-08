@@ -4,13 +4,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
-import pages.MainPage;
 import pages.base_abstract.TopMenuPage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WebPage extends TopMenuPage<WebPage> {
@@ -21,6 +18,12 @@ public class WebPage extends TopMenuPage<WebPage> {
     private WebElement buttonShowMore;
     @AndroidFindBy(xpath =  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView")
     private List<WebElement> allResultOfWebSearch;
+    @iOSXCUITFindBy(id = "search btn")
+    @AndroidFindBy(className=  "android.widget.Image")
+    private WebElement imageOfPreview;
+    @iOSXCUITFindBy(id = "search btn")
+    @AndroidFindBy(xpath=  "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.widget.ImageView")
+    private WebElement firstVideoInWidget;
     public WebPage(AppiumDriver appiumDriver){
         super(appiumDriver);
     }
@@ -36,6 +39,18 @@ public class WebPage extends TopMenuPage<WebPage> {
     public WebPage waitUntilVisibilityWebResult() {
         wait10ElementToBeVisible(firstResultOfWebSearch);
         return this;
+    }
+    public WebPage waitUntilVisibilityImageInPreview() {
+        wait10ElementToBeVisible(imageOfPreview);
+        return this;
+    }
+    public WebPage holdThreeSecond(){
+        hold(firstResultOfWebSearch,3);
+        return new WebPage(getAppiumDriver());
+    }
+    public WebPage clickFirstVideoInWidget(){
+        firstVideoInWidget.click();
+        return new WebPage(getAppiumDriver());
     }
     public List<String> getTextAllTitlesOfWebResult() {
        return getTexts(allResultOfWebSearch);

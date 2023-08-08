@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Parallel Test Suite" parallel="classes" thread-count="3">
-    <test name="Static pages tests" >
+<suite name="YourTestSuite">
+    <test name="AndroidTest">
+        <parameter name="platform" value="android" />
         <classes>
-            <class name="tests.android_platform.MainTest"/>
+            <class name="tests.android_platform.MainTest" />
+        </classes>
+    </test>
+    <test name="iOSTest">
+        <parameter name="platform" value="ios" />
+        <classes>
+            <class name="tests.ios_platform.MainTest" />
         </classes>
     </test>
 </suite>
